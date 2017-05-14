@@ -19,18 +19,33 @@ export default class TwitchList extends React.Component {
       height: "64px",
       marginRight: "10px"
     };
+    const info_style = {
+      display: "flex",
+      flexDirection: "column"
+    };
+    const small_text = {
+      fontSize: "0.7em"
+    }
     const rows = data.map( ( d,ndx) => {
       console.log( "row:", d);
       if( typeof d.error !== "undefined"){
         return "";
       }
+      if( d.stream === null){
+        return (
+          <div key={ndx} style={card}>
+            <span style={spacer}></span>
+            {d.display_name}
+          </div>
+        );
+      }
       return (
         <div key={ndx} style={card}>
-          {d.stream === null?
-            <span style={spacer}></span>
-          : <img style={img_style} src={d.stream===null?"":d.stream.logo} alt="no logo" />
-          }
-          {d.stream === null?d.display_name:d.stream.display_name}
+          <img style={img_style} src={d.stream===null?"":d.stream.logo} alt="no logo" />
+          <div style={info_style} >
+            <a href={d.stream.url} >{d.stream.display_name}</a>
+            <div style={small_text}>{d.stream.status}</div>
+          </div>
         </div>
       );
     });
