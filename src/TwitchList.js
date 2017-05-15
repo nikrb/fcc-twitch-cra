@@ -1,5 +1,4 @@
 import React from 'react';
-import data from './data.json';
 
 export default class TwitchList extends React.Component {
   render = () => {
@@ -34,15 +33,8 @@ export default class TwitchList extends React.Component {
       right: ".5em",
       fontWeight: "bold"
     };
-    const rows = data.map( ( d,ndx) => {
-      if( typeof d.error !== "undefined"){
-        return "";
-      }
-      const re = new RegExp( this.props.searchText, "i");
-      if( d.stream === null){
-        if( this.props.searchText !== "" && d.display_name.search( re) === -1){
-          return "";
-        }
+    const rows = this.props.data.map( ( d,ndx) => {
+      if( d.logo === null){
         return (
           <div key={ndx} style={card}>
             <span style={spacer}></span>
@@ -53,20 +45,18 @@ export default class TwitchList extends React.Component {
             </div>
           </div>
         );
-      }
-      if( this.props.searchText !== "" && d.stream.display_name.search( re) === -1){
-        return "";
-      }
-      return (
-        <div key={ndx} style={card}>
-          <img style={img_style} src={d.stream===null?"":d.stream.logo} alt="no logo" />
-          <div style={info_style} >
-            <a href={d.stream.url} >{d.stream.display_name}</a>
-            <span style={{...status_icon, color:"green"}} >&#x2713;</span>
-            <div style={small_text}>{d.stream.status}</div>
+      } else {
+        return (
+          <div key={ndx} style={card}>
+            <img style={img_style} src={d.logo} alt="no logo" />
+            <div style={info_style} >
+              <a href={d.url} >{d.display_name}</a>
+              <span style={{...status_icon, color:"green"}} >&#x2713;</span>
+              <div style={small_text}>{d.status}</div>
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
     });
     return (
       <div>

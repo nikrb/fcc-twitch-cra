@@ -28,6 +28,7 @@ export default class SearchBar extends React.Component {
       <div style={wrapper}>
         <span style={search_icon}>&#x1F50D;</span>
         <input type='text' style={search_field}
+          placeholder="Search ..."
           value={this.state.searchValue} onChange={this.handleSearchChange} />
       </div>
     );
