@@ -5,7 +5,8 @@ import './App.css';
 
 class App extends React.Component {
   state = {
-    show_status : "all"
+    show_status : "all",
+    search_text : ""
   };
   handleAll = () => {
     this.setState( { show_status: "all"});
@@ -15,6 +16,9 @@ class App extends React.Component {
   };
   handleOnline = () => {
     this.setState( { show_status: "online"});
+  };
+  handleSearchChange = ( search_text) => {
+    this.setState( { search_text: search_text});
   };
   render = () => {
     const buttonBar = {
@@ -34,12 +38,11 @@ class App extends React.Component {
       flex: "0 1 400px"
     };
     const list_wrapper = {
-      width: "100%",
       backgroundColor: "white"
     };
     return (
       <div style={container}>
-        <div className="App">
+        <div>
           <div style={buttonBar}>
             <button type="button"
               className={this.state.show_status==="all"?"button-active":""}
@@ -52,8 +55,8 @@ class App extends React.Component {
               onClick={this.handleOnline}>Online</button>
           </div>
           <div style={list_wrapper}>
-            <SearchBar />
-            <TwitchList  />
+            <SearchBar handleSearchChange={this.handleSearchChange}/>
+            <TwitchList searchText={this.state.search_text} />
           </div>
         </div>
       </div>
